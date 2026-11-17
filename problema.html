@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Limpa Rua</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #eeeeee;
+        }
+        .caixa {
+            background-color: white;
+            padding: 15px;
+            border: 1px solid #999;
+            max-width: 400px;
+        }
+        input[type="text"], textarea {
+            width: 95%;
+            padding: 5px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+        button {
+            padding: 8px 12px;
+            cursor: pointer;
+        }
+        #foto-preview {
+            max-width: 200px;
+            display: none;
+            margin-top: 10px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<div class="caixa">
+    <h2>ECO LIXO
+    <p>Avise onde tem lixo para limpar.</p>
+    <hr>
+
+    <form id="formulario">
+        <!-- Localização -->
+        <label><b>Onde fica? (Rua e número):</b></label><br>
+        <button type="button" onclick="pegarGPS()">Pegar meu GPS</button><br>
+        <input type="text" id="local" required>
+
+        <!-- Referência -->
+        <label><b>Ponto de referência:</b></label><br>
+        <input type="text" id="referencia" placeholder="Ex: perto do mercado" required>
+
+        <!-- Foto -->
+        <label><b>Foto do lixo:</b></label><br>
+        <input type="file" id="foto" accept="image/*" onchange="verFoto(event)" required><br>
+        <img id="foto-preview"><br><br>
+
+        <!-- Problemas -->
+        <label><b>Qual problema está dando?</b></label><br>
+        <input type="checkbox" name="prob" value="Cheiro ruim"> Cheiro ruim<br>
+        <input type="checkbox" name="prob" value="Bicho / Mosquito"> Bicho / Mosquito<br>
+        <input type="checkbox" name="prob" value="Entupindo bueiro"> Entupindo bueiro<br>
+        <input type="checkbox" name="prob" value="Atrapalhando passar"> Atrapalhando passar<br><br>
+
+        <!-- Outros detalhes -->
+        <label><b>Mais alguma coisa?</b></label><br>
+        <textarea id="obs" rows="3"></textarea><br>
+
+        <button type="submit">Enviar Pedido</button>
+    </form>
+
+    <div id="aviso" style="margin-top: 20px; background: #ffffcc; padding: 10px; display: none; border: 1px solid #cc9900;"></div>
+</div>
+
+<script>
+    function pegarGPS() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                document.getElementById('local').value = pos.coords.latitude + ", " + pos.coords.longitude;
+            }, function() {
+                alert("Não deu para pegar o GPS. Escreva a rua.");
+            });
+        } else {
+            alert("Seu navegador não tem GPS.");
+        }
+    }
+
+    function verFoto(event) {
+        var img = document.getElementById('foto-preview');
+        img.src = URL.createObjectURL(event.target.files[0]);
+        img.style.display = "block";
+    }
+
+    document.getElementById('formulario').onsubmit = function(e) {
+        e.preventDefault();
+        
+        var local = document.getElementById('local').value;
+        var ref = document.getElementById('referencia').value;
+        var obs = document.getElementById('obs').value;
+        
+        var marcados = document.querySelectorAll('input[name="prob"]:checked');
+        var lista = [];
+        for (var i = 0; i < marcados.length; i++) {
+            lista.push(marcados[i].value);
+        }
+
+        var aviso = document.getElementById('aviso');
+        aviso.style.display = "block";
+        aviso.innerHTML = "<b>Enviado!</b><br>" +
+                          "Local: " + local + "<br>" +
+                          "Referência: " + ref + "<br>" +
+                          "Problemas: " + lista.join(", ") + "<br>" +
+                          "Obs: " + obs;
+    };
+</script>
+
+</body>
+</html>
