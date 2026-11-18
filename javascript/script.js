@@ -57,3 +57,51 @@ function adicionarAoPedido(idItem) {
         console.log(`Adicionado: ${itemSelecionado.nome}. Total atual: R$ ${valorTotalPedido.toFixed(2)}`);
     }
 }
+
+const form = document.getElementById('form');
+
+const msg = document.getElementById('msg');
+
+form.addEventListener('submit', (e) => {
+
+e.preventDefault();
+
+const nome = document.getElementById('nome').value.trim();
+
+const email = document.getElementById('email').value.trim();
+
+const telefone = document.getElementById('tel').value.trim();
+
+const cpf = document.getElementById('cpf').value.trim();
+
+if (nome.length < 3) {
+
+msg.textContent = 'Informe o nome (mín. 3 letras).';
+msg.className = 'erro';
+return;
+
+if (cpf.length < 8){
+    msg.textContent = 'Informe seu CPF (8 números)';
+    msg.className = 'erro';
+    return;
+}
+
+if (telefone.length < 3){
+    msg.textContent = 'Informe seu telefone';
+    msg.className = 'erro';
+    return;
+}
+
+if (!email.includes('@')) {
+
+    msg.textContent = 'Informe um e-mail válido.';
+    msg.className = 'erro';
+    return;
+}
+
+msg.textContent = `Cadastro feito, ${nome}!`;
+
+msg.className = 'ok';
+
+form.reset();
+}})
