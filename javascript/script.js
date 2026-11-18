@@ -1,8 +1,8 @@
 const reciclagem = [
-    {id: 1, nome: 'Papel', img:'img\\papel.jpg'},
-    {id: 2, nome: 'Plástico',img:'img\\plastico.jpeg'},
-    {id: 3, nome: 'Vidro',img:'img\\vidro.jpg'},
-    {id: 4, nome: 'Metal',img:'img\\metal.jpg'},
+    {id: 1, nome: 'Papel', quantidade: 5, img:'img\\papel.jpg'},
+    {id: 2, nome: 'Plástico',quantidade: 10, img:'img\\plastico.jpeg'},
+    {id: 3, nome: 'Vidro',quantidade: 15, img:'img\\vidro.jpg'},
+    {id: 4, nome: 'Metal',quantidade: 20, img:'img\\metal.jpg'},
 ];
 
 console.log(reciclagem.length);
@@ -17,6 +17,7 @@ reciclagem.forEach((item) => {
 const container = document.getElementById('cards-container');
 //declara função responsável por gerar e exibir os cartões dos materiais da página
 function criarCartoes(item) {
+    container.innerHTML = "";
     //percorre cada elemento (item) presente no array de dados chamado de 'Reciclagem'
     reciclagem.forEach(item => { 
         //cria um novo elemento <div> na memória do navegador para funcionar como a caixa do cartão
@@ -25,8 +26,9 @@ function criarCartoes(item) {
         card.classList.add('cartao-material');
         //define o conteúdo html interno do cartão utilizando template literals (crase)
         card.innerHTML = `
-        <br><br>
         <img src="${item.img}" alt="${item.nome}" width="120">
+        <p><strong>${item.nome}</strong></p>
+        <p>${item.quantidade.toFixed(2)}</p>
         <button onclick="adicionarAoPedido(${item.id})">Adicionar ao Descarte</button>
         `;
         //insere o cartão (elemtento<div>) como filho do contêiner principal na página visível 
@@ -49,7 +51,7 @@ function adicionarAoPedido(idItem) {
 
     if (itemSelecionado) {
         // Soma o valor do quilo ao total geral do pedido
-        valorTotalPedido += itemSelecionado.precoPorKg;
+        valorTotalPedido += itemSelecionado.quantidade;
 
         // Atualiza na tela onde mostra o valor total (ex: <span id="total">0.00</span>)
         document.getElementById('total').innerText = valorTotalPedido.toFixed(2);
