@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="Estilos/primeiro_estilo.css" rel="stylesheet" />
     <title>Catálogo</title>
+    
 </head>
 
 <body>
@@ -12,15 +14,61 @@
     <h2>Catálogo de Materiais</h2><img src="img/LOGO ECO LIXO.jpeg" alt="Logotipo ECO-LIXO" width="1000px"
         height="300px">
     <br>
-    <a href="Index.html">Página Principal</a> |
-    <a href="cadastro.html">Cadastrar</a>
-
+    <nav>
+        <a href="Index.html">Página Principal</a> |
+        <a href="cadastro.html">Cadastrar Usuário</a>
+    </nav>
     <div id="cards-container"></div> <!-- É aqui que o JS vai colocar os cartões -->
+    <div class="resumo-pedido">
+        Total do Descarte: R$ <span id="total">0.00</span>
+    </div>
     <br>
 
     <style>
         body {
             background-color: #5ae974;
+            text-align: center;
+        }
+        #cards-container{
+            /*propriedade flex, ativa o layout flexbox numa div e muda o formato para que fiquem lado a lado*/
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 20px;
+
+        }
+        .cartao-material {
+            background-color: #5ae974;
+            border: 1px solid #5ae974;
+            padding: 15px;
+            width: 180px;
+            text-align: center;
+        }
+
+        .cartao-material img {
+            margin-bottom: 10px;
+        }
+        button {
+            background-color: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        /* Resumo do total acumulado */
+        .resumo-pedido {
+            margin-top: 30px;
+            font-size: 20px;
+            font-weight: bold;
+            color: #333333;
         }
 
         h2 {

@@ -13,27 +13,38 @@ reciclagem.forEach((item) => {
     console.log(item.nome)
 });
 
+//seleciona o elemento html com id="cards-container" e o armazena na constante 'conteirner"
 const container = document.getElementById('cards-container');
-function criarCartoes() {
-    container.innerHTML = "";
+//declara função responsável por gerar e exibir os cartões dos materiais da página
+function criarCartoes(item) {
+    //percorre cada elemento (item) presente no array de dados chamado de 'Reciclagem'
     reciclagem.forEach(item => { 
+        //cria um novo elemento <div> na memória do navegador para funcionar como a caixa do cartão
         const card = document.createElement('div');
+        //aplica a class css 'cartão-material' na <div> recém criada para receber a estilização visual
         card.classList.add('cartao-material');
+        //define o conteúdo html interno do cartão utilizando template literals (crase)
         card.innerHTML = `
         <br><br>
         <img src="${item.img}" alt="${item.nome}" width="120">
         <button onclick="adicionarAoPedido(${item.id})">Adicionar ao Descarte</button>
         `;
+        //insere o cartão (elemtento<div>) como filho do contêiner principal na página visível 
         container.appendChild(card);
     });
 }
+
+
+
+//chama a função 'criarCartoes()' para desenhar os cartões assim que o script for carregado 
 criarCartoes();
 
-
+//declara a variável valorTotalPedido inicializada em 0 para armazenar e acumular a soma financeira do pedido
 let valorTotalPedido = 0;
 
+//declara a função que processa a inclusão de um item ao pedido, recebendo o id do item clicado
 function adicionarAoPedido(idItem) {
-    // Acha o item correspondente no array pelo ID
+    // busca dentro do array 'reciclagem' o primeiro item cujo id atribuido 'id' seja igual ao 'idItem' informado
     const itemSelecionado = reciclagem.find(i => i.id === idItem);
 
     if (itemSelecionado) {
