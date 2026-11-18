@@ -1,8 +1,8 @@
 const reciclagem = [
-    {id: 1, nome: 'Papel'},
-    {id: 2, nome: 'Plástico'},
-    {id: 3, nome: 'Vidro'},
-    {id: 4, nome: 'Metal'},
+    {id: 1, nome: 'Papel', img:'img\\papel.jpg'},
+    {id: 2, nome: 'Plástico',img:'img\\plastico.jpeg'},
+    {id: 3, nome: 'Vidro',img:'img\\vidro.jpg'},
+    {id: 4, nome: 'Metal',img:'img\\metal.jpg'},
 ];
 
 console.log(reciclagem.length);
