@@ -1,20 +1,44 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="Estilos/primeiro_estilo.css" rel="stylesheet" />
     <title>Cadastro de novo usuário</title>
+    <style>
+        /* Classes para as mensagens de validação */
+        .erro { 
+            color: #d9534f; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+            padding: 10px;
+            border: 1px solid #d9534f;
+            background-color: #fdf7f7;
+        }
+        .sucesso { 
+            color: #28a745; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+            padding: 10px;
+            border: 1px solid #28a745;
+            background-color: #f4fdf5;
+        }
+    </style>
 </head>
 <body>
     <h2>Cadastro do Usuário</h2>
-    <form action="#" method="post">
+    
+    <!-- Contêiner para exibir as mensagens no próprio formulário -->
+    <div id="mensagem-validacao"></div>
+
+    <!-- Adicionado o id "formCadastro" e corrigida a estrutura do botão -->
+    <form id="formCadastro" action="#" method="post">
         <p><label for="nome">Nome:</label><br>
-            <input type="text" id="nome" name="nome" required minlength="3"></p>
+            <!-- Removido o 'required' nativo do HTML para testar a validação via JavaScript (Casos de dados vazios) -->
+            <input type="text" id="nome" name="nome"></p>
             
         <p><label for="email">E-mail:</label><br>
-            <input type="email" id="email" name="email" required></p>
+            <input type="text" id="email" name="email"></p>
             
         <p><label for="tel">Telefone:</label><br>
             <input type="tel" id="tel" name="tel" placeholder="(81) 99999-9999"></p>
@@ -30,58 +54,57 @@
             
         <p><label for="estado">Estado:</label><br>
             <input type="text" id="estado" name="estado" placeholder="PE"></p>
+            
+        <button type="submit">Se Cadastrar no sistema</button>
     </form>
 
-    <button type="submit"><a href="Index.html"> Se Cadastrar no sistema </a></button></form>
-    <p><a href="index.html" target="_blank" rel="noopener noreferrer">Voltar Para Menu Principal</a></p></strong>.</p>
-<script>
-const form = document.getElementById('form');
+    <p><a href="index.html" target="_blank" rel="noopener noreferrer">Voltar Para Menu Principal</a></p>
 
-const msg = document.getElementById('msg');
+    <script>
+        // 1. Captura o formulário e a div de mensagens
+        const form = document.getElementById('formCadastro');
+        const divMensagem = document.getElementById('mensagem-validacao');
 
-form.addEventListener('submit', (e) => {
+        // Adiciona o ouvinte para o evento submit
+        form.addEventListener('submit', function(event) {
+            // Evita o recarregamento padrão da página
+            event.preventDefault();
 
-e.preventDefault();
+            // Leitura dos campos
+            const nome = document.getElementById('nome').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const cpf = document.getElementById('cpf').value.trim(); // Campo específico do projeto
 
-const nome = document.getElementById('nome').value.trim();
+            let erros = [];
 
-const email = document.getElementById('email').value.trim();
+            // 2. Regras de validação (3 validações distintas)
+            if (nome === "" || nome.length < 3) {
+                erros.push("O campo 'Nome' é obrigatório e deve ter no mínimo 3 caracteres.");
+            }
 
-const telefone = document.getElementById('tel').value.trim();
+            if (email === "" || !email.includes('@') || !email.includes('.')) {
+                erros.push("Insira um endereço de 'E-mail' válido.");
+            }
 
-const cpf = document.getElementById('cpf').value.trim();
+            if (cpf === "" || cpf.length < 11) {
+                erros.push("O campo 'CPF' é obrigatório e deve conter no mínimo 11 dígitos.");
+            }
 
-if (nome.length < 3) {
+            // 3. Exibição das mensagens com cor de erro ou sucesso
+            divMensagem.innerHTML = ""; // Limpa mensagens anteriores
+            divMensagem.className = ""; // Limpa classes anteriores
 
-msg.textContent = 'Informe o nome (mín. 3 letras).';
-msg.className = 'erro';
-return;
-
-if (cpf.length < 8){
-    msg.textContent = 'Informe seu CPF (8 números)';
-    msg.className = 'erro';
-    return;
-}
-
-if (telefone.length < 3){
-    msg.textContent = 'Informe seu telefone';
-    msg.className = 'erro';
-    return;
-}
-
-if (!email.includes('@')) {
-
-    msg.textContent = 'Informe um e-mail válido.';
-    msg.className = 'erro';
-    return;
-}
-
-msg.textContent = `Cadastro feito, ${nome}!`;
-
-msg.className = 'ok';
-
-form.reset();
-}})
-</script>
+            if (erros.length > 0) {
+                // Caso existam erros (Dados vazios ou errados)
+                divMensagem.classList.add('erro');
+                divMensagem.innerHTML = erros.join('<br>');
+            } else {
+                // Caso os dados estejam corretos
+                divMensagem.classList.add('sucesso');
+                divMensagem.innerHTML = "Cadastro validado e realizado com sucesso!";
+                form.reset(); // Limpa os campos do formulário
+            }
+        });
+    </script>
 </body>
 </html>
