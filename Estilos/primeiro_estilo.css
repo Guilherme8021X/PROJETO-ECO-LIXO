@@ -1,13 +1,14 @@
 :root {
 
-  --verde-escuro: #355E3B;
+  --verde-dos-link: #ff8724;
   --fundo-branco: #E5E4E2;
   --rodapé-marrom: #4E312D;
-  --cor-do-texto: #000000;
+  --cor-do-texto: #ffac37;
   --cinza-: #555555;
   --amarelo-: #F28500;
   --azulede-: #00534E;
   --verde-primavera-: #00FF7F;
+  --verde-de-fundo-: #355E3B;
 }
 * {
   margin: 0;
@@ -16,12 +17,12 @@
 }
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background-color: #E5E4E2;
+  background-color: #355E3B;
   color: var(--cor-do-texto);
   line-height: 1.6;
 }
 header {
-  background-color: #E5E4E2;
+  background-color: #355E3B;
   padding: 1rem 5%;
   border-bottom: var(--cinza-);
 
